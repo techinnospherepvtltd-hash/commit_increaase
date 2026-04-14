@@ -32,6 +32,7 @@ jobs:
       run: npm run build
       env:
         CI: false # Prevents warnings from being treated as errors during build
+        VITE_API_URL: https://techinnosphere-fullweb-admin.onrender.com/api
 
     - name: Run Backend Seed Test
       run: npm run seed
