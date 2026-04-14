@@ -15,7 +15,8 @@ app.use(cors({
     'http://localhost:8080', 
     'http://localhost:5173', 
     'https://techinnosphere.com',
-    'https://www.techinnosphere.com'
+    'https://www.techinnosphere.com',
+    'https://techinnospherepvtltd-hash.github.io'
   ],
   credentials: true,
 }));
