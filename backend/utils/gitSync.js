@@ -4,7 +4,8 @@ const fs = require('fs');
 
 async function syncToGithub() {
   // Only sync if GITHUB_TOKEN is provided (production/Render)
-  if (!process.env.GITHUB_TOKEN) {
+  const token = (process.env.GITHUB_TOKEN || '').replace(/\s+/g, '');
+  if (!token) {
     console.log('ℹ️  Skipping Git Auto-Sync (GITHUB_TOKEN not provided)');
     return;
   }
@@ -13,12 +14,14 @@ async function syncToGithub() {
     const git = simpleGit(path.join(__dirname, '..', '..'));
     
     // Configure remote with token for authentication
-    // Assuming the remote is already 'origin'
-    const remote = await git.remote(['get-url', 'origin']);
-    if (remote && !remote.includes(process.env.GITHUB_TOKEN)) {
-      // Modify URL to include token: https://<token>@github.com/user/repo.git
-      const authRemote = remote.replace('https://', `https://${process.env.GITHUB_TOKEN}@`);
-      await git.remote(['set-url', 'origin', authRemote]);
+    let remote = await git.remote(['get-url', 'origin']);
+    if (remote) {
+      remote = remote.replace(/\s+/g, ''); // Remove all whitespace/newlines
+      if (!remote.includes(token)) {
+        // Modify URL to include token: https://<token>@github.com/user/repo.git
+        const authRemote = remote.replace('https://', `https://${token}@`);
+        await git.remote(['set-url', 'origin', authRemote]);
+      }
     }
 
     // Stage the Excel file (and any other potential data files)
