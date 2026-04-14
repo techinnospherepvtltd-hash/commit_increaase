@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: techinnosphere-backend
+    env: node
+    plan: free # Can be changed to a paid plan for persistent disk if desired
+    region: ohio # Adjust to your preferred region
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GITHUB_TOKEN
+        sync: false # User must provide this in Render dashboard
+      - key: CORS_ORIGIN
+        value: https://techinnosphere.com

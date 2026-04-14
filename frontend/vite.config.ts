@@ -10,6 +10,8 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    // Proxy is only for local development
+    /*
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -17,6 +19,7 @@ export default defineConfig({
         secure: false,
       },
     },
+    */
   },
   plugins: [react()],
   resolve: {

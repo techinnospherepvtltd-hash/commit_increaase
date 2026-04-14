@@ -1,5 +1,6 @@
 const ExcelJS = require('exceljs');
 const path = require('path');
+const { syncToGithub } = require('./gitSync');
 
 const DATA_FILE = path.join(__dirname, '..', '..', 'data', 'techinnosphere_data.xlsx');
 
@@ -92,6 +93,9 @@ async function writeSheet(sheetName, data) {
   data.forEach(row => sheet.addRow(row));
 
   await workbook.xlsx.writeFile(DATA_FILE);
+
+  // Sync to GitHub if on Render
+  syncToGithub();
 }
 
 /**
